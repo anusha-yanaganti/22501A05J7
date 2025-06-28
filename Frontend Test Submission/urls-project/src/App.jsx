@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LinkRedirector from "./components/LinkRedirector";
+import Statistics from "./components/Statistics";
+import InputForm from "./components/InputForm";
+import { Button, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function NavButton() {
+  const navigate = useNavigate();
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Box p={2}>
+      <Button variant="contained" color="secondary" onClick={() => navigate("/stats")}>
+        View Statistics
+      </Button>
+    </Box>
+  );
 }
 
-export default App
+function App() {
+
+  return (
+      <Router>
+           <NavButton />
+
+        <Routes>
+          <Route path="/" element={<InputForm />} />
+          <Route path="/stats" element={<Statistics />} />
+          <Route path="/:shortCode" element={<LinkRedirector />} />
+        </Routes>
+      </Router>
+  );
+}
+
+export default App;
